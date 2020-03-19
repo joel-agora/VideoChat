@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 11400008}
   - component: {fileID: 11400010}
   - component: {fileID: 190703025}
+  - component: {fileID: 1063649583991970590}
   m_Layer: 0
   m_Name: Charprefab
   m_TagString: Player
@@ -191,8 +192,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 11400010}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
+  viewIdField: 2
+  instantiationId: 2
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11400010
@@ -216,10 +217,28 @@ SphereCollider:
   m_GameObject: {fileID: 100006}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1063649583991970590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e5b391129b54439ac475f2154245da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appID: 57481146914f4cddaa220d6f7a045063
+  channel: agora1
+  inviteButton: {fileID: 8579622083459736607}
+  joinButton: {fileID: 7928029579918061378}
+  remoteVideoSurface: {fileID: 1211397892503154501}
+  debugText: {fileID: 920912272}
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +437,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -993,6 +1013,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1164,6 +1185,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1233,16 +1255,15 @@ Animation:
   m_GameObject: {fileID: 100060}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 1827226128182048838, guid: 3959c4793b5a47741b85d6de3f4aff5e,
-    type: 3}
+  m_Animation: {fileID: 7400000, guid: 3959c4793b5a47741b85d6de3f4aff5e, type: 3}
   m_Animations:
-  - {fileID: 1827226128182048838, guid: d774d93b50a320842b9a97a6c399f11f, type: 3}
-  - {fileID: 1827226128182048838, guid: 3959c4793b5a47741b85d6de3f4aff5e, type: 3}
-  - {fileID: 1827226128182048838, guid: 85127b674fe584941a535023f7a3dca0, type: 3}
-  - {fileID: 1827226128182048838, guid: 16b52d3acfdf8a44980f0ec8a78f68bb, type: 3}
-  - {fileID: 1827226128182048838, guid: 388d0efd3c755034d8ee46d405272e07, type: 3}
-  - {fileID: 1827226128182048838, guid: d56e8146ee53a2246b028f3c3095679c, type: 3}
-  - {fileID: 1827226128182048838, guid: a0984aae81a6f9d4294955fc25382391, type: 3}
+  - {fileID: 7400000, guid: d774d93b50a320842b9a97a6c399f11f, type: 3}
+  - {fileID: 7400000, guid: 3959c4793b5a47741b85d6de3f4aff5e, type: 3}
+  - {fileID: 7400000, guid: 85127b674fe584941a535023f7a3dca0, type: 3}
+  - {fileID: 7400000, guid: 16b52d3acfdf8a44980f0ec8a78f68bb, type: 3}
+  - {fileID: 7400000, guid: 388d0efd3c755034d8ee46d405272e07, type: 3}
+  - {fileID: 7400000, guid: d56e8146ee53a2246b028f3c3095679c, type: 3}
+  - {fileID: 7400000, guid: a0984aae81a6f9d4294955fc25382391, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -2178,7 +2199,7 @@ PrefabInstance:
     - target: {fileID: 377193466381963136, guid: 6b53bbd1d93e948678641778715126fc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 377193466381963142, guid: 6b53bbd1d93e948678641778715126fc,
         type: 3}
@@ -2260,6 +2281,11 @@ PrefabInstance:
       propertyPath: debugText
       value: 
       objectReference: {fileID: 920912272}
+    - target: {fileID: 377193466381963143, guid: 6b53bbd1d93e948678641778715126fc,
+        type: 3}
+      propertyPath: channel
+      value: agora1
+      objectReference: {fileID: 0}
     - target: {fileID: 8636381643187532660, guid: 6b53bbd1d93e948678641778715126fc,
         type: 3}
       propertyPath: m_IsActive

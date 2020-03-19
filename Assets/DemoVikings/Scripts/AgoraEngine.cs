@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using agora_gaming_rtc;
 using agora_utilities;
+using Photon;
 
-public class AgoraEngine : MonoBehaviour
+public class AgoraEngine : Photon.MonoBehaviour
 {
     public string appID;
     public string channel;
@@ -22,12 +23,39 @@ public class AgoraEngine : MonoBehaviour
 
     public Text debugText;
 
+    public static GameObject localPlayerInstance;
+
+    private void Awake()
+    {
+        if(photonView.isMine)
+        {
+            AgoraEngine.localPlayerInstance = this.gameObject;
+        }
+        else
+        {
+            print("no photon view");
+        }
+    }
+
     void Start()
     {
-        //if(rtcEngine == null)
-        //{
-            rtcEngine = IRtcEngine.GetEngine(appID);
-        //}
+        if(PhotonNetwork.connected == true && !photonView.isMine)
+        {
+            Canvas otherCanvas = transform.GetChild(1).GetComponent<Canvas>();
+            if (otherCanvas)
+            {
+                otherCanvas.enabled = false;
+                print("disabling other players canvas");
+            }
+            else
+            {
+                print("No canvas found");
+                print(otherCanvas.name);
+            }
+        }
+
+        rtcEngine = IRtcEngine.GetEngine(appID);
+        
 
         
         rtcEngine.OnUserJoined += OnUserJoinedHandler;
@@ -69,7 +97,7 @@ public class AgoraEngine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (photonView.isMine && other.CompareTag("Player"))
         {
             inviteButton.SetActive(true);
 
@@ -81,7 +109,7 @@ public class AgoraEngine : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (photonView.isMine && other.CompareTag("Player"))
         {
             inviteButton.SetActive(false);
             joinButton.SetActive(false);
@@ -90,23 +118,47 @@ public class AgoraEngine : MonoBehaviour
         }
     }
 
-    //// Button Events
+    // Button Events
     public void OnInviteButtonPress()
     {
-        
-        AgoraEngine otherPlayerAgoraRTC = otherPlayer.gameObject.transform.GetChild(2).GetComponent<AgoraEngine>();
-        print(otherPlayerAgoraRTC.gameObject.name);
-        otherPlayerAgoraRTC.ShowJoinButton(channel);
-        debugText.text += "\nyou have invited " + otherPlayerAgoraRTC.gameObject.name;
+        if(photonView.isMine)
+        {
+            print("invite button - photon view is good");
+            if(otherPlayer != null)
+            {
+                print("other player isn't null");
+                AgoraEngine otherPlayerAgoraRTC = otherPlayer.gameObject.GetComponent<AgoraEngine>();
+
+                if (otherPlayerAgoraRTC)
+                {
+                    otherPlayerAgoraRTC.ShowJoinButton(channel);
+                    debugText.text += "\nyou have invited " + otherPlayerAgoraRTC.gameObject.name;
+                }
+                else
+                {
+                    print("otherPlayerAgoraRTC not found");
+                }
+            }
+            else
+            {
+                print("other player null");
+            }
+        }
     }
 
     public void OnJoinButtonPress()
     {
-        rtcEngine.JoinChannel(otherChannel, null, 0);
+        if(photonView.isMine)
+        {
+            rtcEngine.JoinChannel(otherChannel, null, 0);
+        }
     }
 
     public void ShowJoinButton(string newChannel)
     {
+        if (!photonView.isMine)
+            return;
+
         joinButton.SetActive(true);
         otherChannel = newChannel;
         debugText.text += "\nyou have been invited to channel: " + newChannel;

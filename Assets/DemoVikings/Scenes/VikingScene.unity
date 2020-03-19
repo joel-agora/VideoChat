@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!1 &5
@@ -108,7 +109,6 @@ GameObject:
   m_Component:
   - component: {fileID: 16}
   - component: {fileID: 27}
-  - component: {fileID: 33}
   - component: {fileID: 36}
   - component: {fileID: 32}
   m_Layer: 0
@@ -554,14 +554,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5}
   m_Enabled: 1
---- !u!92 &33
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5}
-  m_Enabled: 1
 --- !u!108 &34
 Light:
   m_ObjectHideFlags: 0
@@ -570,8 +562,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.4509804, g: 0.5647059, b: 0.5647059, a: 1}
   m_Intensity: 0.4
   m_Range: 10
@@ -630,8 +623,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.89411765, g: 0.8666667, b: 0.79607844, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -777,7 +771,8 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 1
   instantiationId: 1
@@ -824,11 +819,12 @@ MonoBehaviour:
   message: 'Setup incomplete
 
 
-    This demo depends on some custom input definitions which are currently missing
-    from your input settings.
+    This demo depends on some custom input definitions
+    which are currently missing from your input settings.
 
 
-    Please see READ ME FIRST.txt for details.'
+    Please see READ ME
+    FIRST.txt for details.'
 --- !u!218 &45
 Terrain:
   m_ObjectHideFlags: 0
@@ -837,7 +833,7 @@ Terrain:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14}
   m_Enabled: 1
-  serializedVersion: 5
+  serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: d2e707b932c1d1e4db8c3daba8e8f844, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
@@ -860,6 +856,7 @@ Terrain:
   m_ScaleInLightmap: 1
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
+  m_RenderingLayerMask: 1
   m_AllowAutoConnect: 0
 --- !u!196 &46
 NavMeshSettings:
