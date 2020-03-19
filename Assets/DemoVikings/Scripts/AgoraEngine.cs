@@ -121,7 +121,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     // Button Events
     public void OnInviteButtonPress()
     {
-        if(photonView.isMine)
+        if(PhotonNetwork.connected && photonView.isMine)
         {
             print("invite button - photon view is good");
             if(otherPlayer != null)
