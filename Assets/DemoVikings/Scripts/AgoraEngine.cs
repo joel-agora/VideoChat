@@ -156,11 +156,17 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public void ShowJoinButton(string newChannel)
     {
-        if (!photonView.isMine)
-            return;
-
-        joinButton.SetActive(true);
-        otherChannel = newChannel;
-        debugText.text += "\nyou have been invited to channel: " + newChannel;
+        if (photonView.isMine)
+        {
+            joinButton.SetActive(true);
+            otherChannel = newChannel;
+            debugText.text += "\nIF you have been invited to channel: " + newChannel; 
+        }
+        else
+        {
+            joinButton.SetActive(true);
+            otherChannel = newChannel;
+            debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+        }
     }
 }
