@@ -12,7 +12,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     public string channel;
 
     public GameObject inviteButton;
-    public GameObject joinButton;
+    public Button joinButton;
 
     private IRtcEngine rtcEngine;
 
@@ -23,19 +23,6 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public Text debugText;
 
-    public static GameObject localPlayerInstance;
-
-    private void Awake()
-    {
-        if(photonView.isMine)
-        {
-            AgoraEngine.localPlayerInstance = this.gameObject;
-        }
-        else
-        {
-            print("no photon view");
-        }
-    }
 
     void Start()
     {
@@ -72,7 +59,7 @@ public class AgoraEngine : Photon.MonoBehaviour
 
 
         inviteButton.SetActive(false);
-        joinButton.SetActive(false);
+        joinButton.interactable = false;
     }
 
     private void OnApplicationQuit()
@@ -112,7 +99,7 @@ public class AgoraEngine : Photon.MonoBehaviour
         if (photonView.isMine && other.CompareTag("Player"))
         {
             inviteButton.SetActive(false);
-            joinButton.SetActive(false);
+            //joinButton.SetActive(false);
 
             otherPlayer = null;
         }
@@ -131,7 +118,7 @@ public class AgoraEngine : Photon.MonoBehaviour
 
 
                 //otherPlayerAgoraRTC.ShowJoinButton(channel);
-                debugText.text += "\nyou have invited " + otherPlayer.transform.parent.name;
+                //debugText.text += "\nyou have invited " + otherPlayer.transform.parent.name;
             }
         }
     }
@@ -147,17 +134,10 @@ public class AgoraEngine : Photon.MonoBehaviour
     [PunRPC]
     public void ShowJoinButton(string newChannel)
     {
-        if (photonView.isMine)
+        if (!photonView.isMine)
         {
-            print("JOIN IF");
-            //joinButton.SetActive(true);
-            //otherChannel = newChannel;
-            //debugText.text += "\nIF you have been invited to channel: " + newChannel; 
-        }
-        else
-        {
-            print("ElSE IF");
-            joinButton.SetActive(true);
+            print("JOIN BUTTON DISPLAY");
+            joinButton.interactable = true;
             otherChannel = newChannel;
             debugText.text += "\nELSE you have been invited to channel: " + newChannel;
         }

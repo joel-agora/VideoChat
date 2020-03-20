@@ -191,8 +191,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 11400010}
   ObservedComponentsFoldoutOpen: 1
-  viewIdField: 2
-  instantiationId: 2
+  viewIdField: 0
+  instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11400010
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appID: 57481146914f4cddaa220d6f7a045063
-  channel: agora
+  channel: agora1
   inviteButton: {fileID: 8579622083459736607}
   joinButton: {fileID: 7928029579918061378}
   remoteVideoSurface: {fileID: 1211397892503154501}
