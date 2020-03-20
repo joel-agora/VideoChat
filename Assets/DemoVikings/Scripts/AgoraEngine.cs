@@ -19,7 +19,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     public VideoSurface remoteVideoSurface;
 
     private Collider otherPlayer;
-    private string otherChannel;
+    public string otherChannel;
 
     public Text debugText;
 
@@ -60,6 +60,8 @@ public class AgoraEngine : Photon.MonoBehaviour
 
         inviteButton.SetActive(false);
         joinButton.interactable = false;
+
+        joinButton.interactable = true;
     }
 
     private void OnApplicationQuit()
@@ -125,8 +127,10 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public void OnJoinButtonPress()
     {
+        print("trying to press join button");
         if(photonView.isMine)
         {
+            print("join button pressed");
             rtcEngine.JoinChannel(otherChannel, null, 0);
         }
     }

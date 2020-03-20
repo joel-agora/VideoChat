@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appID: 57481146914f4cddaa220d6f7a045063
-  channel: agora1
+  channel: agora
   inviteButton: {fileID: 8579622083459736607}
   joinButton: {fileID: 6869939805351208096}
   remoteVideoSurface: {fileID: 1211397892503154501}
