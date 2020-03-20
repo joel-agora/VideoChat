@@ -103,7 +103,7 @@ public class AgoraEngine : Photon.MonoBehaviour
 
             otherPlayer = other;
 
-            print("otherPlayer = " + other.name);
+            //print("otherPlayer = " + other.name);
         }
     }
 
@@ -131,7 +131,11 @@ public class AgoraEngine : Photon.MonoBehaviour
 
                 if (otherPlayerAgoraRTC)
                 {
-                    otherPlayerAgoraRTC.ShowJoinButton(channel);
+                    //PhotonView photonView = PhotonView.Get(otherPlayer.gameObject.GetComponent<PhotonView>());
+                    photonView.RPC("ShowJoinButton", PhotonTargets.All, "jup");
+
+
+                    //otherPlayerAgoraRTC.ShowJoinButton(channel);
                     debugText.text += "\nyou have invited " + otherPlayerAgoraRTC.gameObject.name;
                 }
                 else
@@ -154,19 +158,23 @@ public class AgoraEngine : Photon.MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void ShowJoinButton(string newChannel)
     {
+        print("Join button");
         if (photonView.isMine)
         {
+            print("JOIN IF");
             joinButton.SetActive(true);
             otherChannel = newChannel;
             debugText.text += "\nIF you have been invited to channel: " + newChannel; 
         }
         else
         {
-            joinButton.SetActive(true);
-            otherChannel = newChannel;
-            debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+            print("ElSE IF");
+            //joinButton.SetActive(true);
+            //otherChannel = newChannel;
+            //debugText.text += "\nELSE you have been invited to channel: " + newChannel;
         }
     }
 }
