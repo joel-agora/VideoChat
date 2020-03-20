@@ -61,7 +61,7 @@ public class AgoraEngine : Photon.MonoBehaviour
         inviteButton.SetActive(false);
         joinButton.interactable = false;
 
-        joinButton.interactable = true;
+        //joinButton.interactable = true;
     }
 
     private void OnApplicationQuit()
@@ -73,7 +73,7 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     private void OnUserJoinedHandler(uint uid, int elapsed)
     {
-        debugText.text += "\nOtherPlayer UID: " + uid;
+        debugText.text += "\nOtherPlayer JOINED UID: " + uid;
 
 
         remoteVideoSurface.gameObject.SetActive(true);
@@ -116,7 +116,7 @@ public class AgoraEngine : Photon.MonoBehaviour
             {
 
                 //PhotonView photonView = PhotonView.Get(otherPlayer.gameObject.GetComponent<PhotonView>());
-                photonView.RPC("ShowJoinButton", PhotonTargets.All, "jup");
+                photonView.RPC("ShowJoinButton", PhotonTargets.All, channel);
 
 
                 //otherPlayerAgoraRTC.ShowJoinButton(channel);
