@@ -29,4 +29,5 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - SendChatMessage
+  - ShowJoinButton
   DisableAutoOpenWizard: 1

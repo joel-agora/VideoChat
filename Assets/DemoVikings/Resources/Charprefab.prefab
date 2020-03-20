@@ -235,7 +235,7 @@ MonoBehaviour:
   appID: 57481146914f4cddaa220d6f7a045063
   channel: agora1
   inviteButton: {fileID: 8579622083459736607}
-  joinButton: {fileID: 7928029579918061378}
+  joinButton: {fileID: 6869939805351208096}
   remoteVideoSurface: {fileID: 1211397892503154501}
   debugText: {fileID: 920912272}
 --- !u!1 &100008
