@@ -123,29 +123,15 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         if(PhotonNetwork.connected && photonView.isMine)
         {
-            print("invite button - photon view is good");
-            if(otherPlayer != null)
+            if (otherPlayer != null)
             {
-                print("other player isn't null");
-                AgoraEngine otherPlayerAgoraRTC = otherPlayer.gameObject.GetComponent<AgoraEngine>();
 
-                if (otherPlayerAgoraRTC)
-                {
-                    //PhotonView photonView = PhotonView.Get(otherPlayer.gameObject.GetComponent<PhotonView>());
-                    photonView.RPC("ShowJoinButton", PhotonTargets.All, "jup");
+                //PhotonView photonView = PhotonView.Get(otherPlayer.gameObject.GetComponent<PhotonView>());
+                photonView.RPC("ShowJoinButton", PhotonTargets.All, "jup");
 
 
-                    //otherPlayerAgoraRTC.ShowJoinButton(channel);
-                    debugText.text += "\nyou have invited " + otherPlayerAgoraRTC.gameObject.name;
-                }
-                else
-                {
-                    print("otherPlayerAgoraRTC not found");
-                }
-            }
-            else
-            {
-                print("other player null");
+                //otherPlayerAgoraRTC.ShowJoinButton(channel);
+                debugText.text += "\nyou have invited " + otherPlayer.transform.parent.name;
             }
         }
     }
@@ -161,20 +147,19 @@ public class AgoraEngine : Photon.MonoBehaviour
     [PunRPC]
     public void ShowJoinButton(string newChannel)
     {
-        print("Join button");
         if (photonView.isMine)
         {
             print("JOIN IF");
-            joinButton.SetActive(true);
-            otherChannel = newChannel;
-            debugText.text += "\nIF you have been invited to channel: " + newChannel; 
+            //joinButton.SetActive(true);
+            //otherChannel = newChannel;
+            //debugText.text += "\nIF you have been invited to channel: " + newChannel; 
         }
         else
         {
             print("ElSE IF");
-            //joinButton.SetActive(true);
-            //otherChannel = newChannel;
-            //debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+            joinButton.SetActive(true);
+            otherChannel = newChannel;
+            debugText.text += "\nELSE you have been invited to channel: " + newChannel;
         }
     }
 }
