@@ -75,6 +75,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         debugText.text += "\nOtherPlayer JOINED UID: " + uid;
 
+        print("new user joined");
 
         remoteVideoSurface.gameObject.SetActive(true);
         //make new UI surface
@@ -140,10 +141,12 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         if (!photonView.isMine)
         {
-            print("JOIN BUTTON DISPLAY");
+            print("Other channel " + otherChannel);
             joinButton.interactable = true;
+            print("join button.interact = " + joinButton.interactable);
             otherChannel = newChannel;
-            debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+            print("other channel: " + otherChannel);
+            //debugText.text += "\nELSE you have been invited to channel: " + newChannel;
         }
     }
 }
