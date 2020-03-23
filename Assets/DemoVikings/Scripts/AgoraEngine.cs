@@ -21,45 +21,45 @@ public class AgoraEngine : Photon.MonoBehaviour
     private Collider otherPlayer;
     public string otherChannel;
 
-    public Text debugText;
+    public GameObject videoSurfacePrefab;
 
 
     void Start()
     {
-        if(PhotonNetwork.connected == true && !photonView.isMine)
-        {
-            Canvas otherCanvas = transform.GetChild(1).GetComponent<Canvas>();
-            if (otherCanvas)
-            {
-                otherCanvas.enabled = false;
-                print("disabling other players canvas");
-            }
-            else
-            {
-                print("No canvas found");
-                print(otherCanvas.name);
-            }
-        }
+        //if(PhotonNetwork.connected == true && !photonView.isMine)
+        //{
+        //    Canvas otherCanvas = transform.GetChild(1).GetComponent<Canvas>();
+        //    if (otherCanvas)
+        //    {
+        //        otherCanvas.enabled = false;
+        //        print("disabling other players canvas");
+        //    }
+        //    else
+        //    {
+        //        print("No canvas found");
+        //        print(otherCanvas.name);
+        //    }
+        //}
 
-        rtcEngine = IRtcEngine.GetEngine(appID);
+        //rtcEngine = IRtcEngine.GetEngine(appID);
         
 
         
-        rtcEngine.OnUserJoined += OnUserJoinedHandler;
+        //rtcEngine.OnUserJoined += OnUserJoinedHandler;
 
-        rtcEngine.EnableVideo();
-        rtcEngine.EnableVideoObserver();
+        //rtcEngine.EnableVideo();
+        //rtcEngine.EnableVideoObserver();
 
         
 
-        rtcEngine.JoinChannel(channel, null, 0);
+        //rtcEngine.JoinChannel(channel, null, 0);
 
-        remoteVideoSurface.SetEnable(false);
-        remoteVideoSurface.gameObject.SetActive(false);
+        //remoteVideoSurface.SetEnable(false);
+        //remoteVideoSurface.gameObject.SetActive(false);
 
 
-        inviteButton.SetActive(false);
-        joinButton.interactable = false;
+        //inviteButton.SetActive(false);
+        //joinButton.interactable = false;
 
         //joinButton.interactable = true;
     }
@@ -73,16 +73,9 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     private void OnUserJoinedHandler(uint uid, int elapsed)
     {
-        debugText.text += "\nOtherPlayer JOINED UID: " + uid;
+        print("user: " + uid + " joined");
 
-        print("new user joined");
-
-        remoteVideoSurface.gameObject.SetActive(true);
-        //make new UI surface
-        remoteVideoSurface.SetForUser(uid);
-        remoteVideoSurface.SetEnable(true);
-        remoteVideoSurface.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
-        remoteVideoSurface.SetGameFps(30);
+        CreateNewUserVideoFrame(uid);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -142,11 +135,48 @@ public class AgoraEngine : Photon.MonoBehaviour
         if (!photonView.isMine)
         {
             print("Other channel " + otherChannel);
-            joinButton.interactable = true;
+            //joinButton.interactable = true;
             print("join button.interact = " + joinButton.interactable);
             otherChannel = newChannel;
             print("other channel: " + otherChannel);
             //debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+        }
+    }
+
+    void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        print("instantiated photon object");
+        //create a new image here
+
+        InitializeAgora();
+    }
+
+    void InitializeAgora()
+    {
+        rtcEngine = IRtcEngine.GetEngine(appID);
+
+        rtcEngine.OnUserJoined += OnUserJoinedHandler;
+        rtcEngine.EnableVideo();
+        rtcEngine.EnableVideoObserver();
+
+        rtcEngine.JoinChannel("agora", null, 0);
+
+        //CreateNewUserVideoFrame();
+    }
+
+    void CreateNewUserVideoFrame(uint newUserUid)
+    {
+        if(photonView.isMine)
+        {
+            GameObject newUserVideo = Instantiate(videoSurfacePrefab, transform.GetChild(1));
+
+            newUserVideo.GetComponent<RectTransform>().anchoredPosition += Vector2.right * 120;
+
+            VideoSurface videoControls = newUserVideo.GetComponent<VideoSurface>();
+            videoControls.SetForUser(newUserUid);
+            videoControls.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
+            videoControls.SetEnable(true);
+            
         }
     }
 }
