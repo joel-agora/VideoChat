@@ -97,12 +97,13 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         if (!photonView.isMine)
         {
-            print("Other channel " + otherChannel);
-            //joinButton.interactable = true;
-            print("join button.interact = " + joinButton.interactable);
+            print("you have been invited to channel: " + newChannel);
+            joinButton.interactable = true;
             otherChannel = newChannel;
-            print("other channel: " + otherChannel);
-            //debugText.text += "\nELSE you have been invited to channel: " + newChannel;
+        }
+        else
+        {
+            joinButton.interactable = true;
         }
     }
 
