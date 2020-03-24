@@ -23,49 +23,18 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public GameObject videoSurfacePrefab;
 
+    static int userCount = 0;
+
+    public uint localuserID;
 
     void Start()
     {
-        //if(PhotonNetwork.connected == true && !photonView.isMine)
-        //{
-        //    Canvas otherCanvas = transform.GetChild(1).GetComponent<Canvas>();
-        //    if (otherCanvas)
-        //    {
-        //        otherCanvas.enabled = false;
-        //        print("disabling other players canvas");
-        //    }
-        //    else
-        //    {
-        //        print("No canvas found");
-        //        print(otherCanvas.name);
-        //    }
-        //}
 
-        //rtcEngine = IRtcEngine.GetEngine(appID);
-        
-
-        
-        //rtcEngine.OnUserJoined += OnUserJoinedHandler;
-
-        //rtcEngine.EnableVideo();
-        //rtcEngine.EnableVideoObserver();
-
-        
-
-        //rtcEngine.JoinChannel(channel, null, 0);
-
-        //remoteVideoSurface.SetEnable(false);
-        //remoteVideoSurface.gameObject.SetActive(false);
-
-
-        //inviteButton.SetActive(false);
-        //joinButton.interactable = false;
-
-        //joinButton.interactable = true;
     }
 
     private void OnApplicationQuit()
     {
+        userCount = 0;
         rtcEngine.LeaveChannel();
         IRtcEngine.Destroy();
         rtcEngine = null; 
@@ -76,6 +45,15 @@ public class AgoraEngine : Photon.MonoBehaviour
         print("user: " + uid + " joined");
 
         CreateNewUserVideoFrame(uid);
+    }
+
+    private void OnLocalUserRegisteredHandler(uint uid, string userAccount)
+    {
+        if(photonView.isMine)
+        {
+            localuserID = uid;
+            print("my id: " + localuserID);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -108,13 +86,7 @@ public class AgoraEngine : Photon.MonoBehaviour
         {
             if (otherPlayer != null)
             {
-
-                //PhotonView photonView = PhotonView.Get(otherPlayer.gameObject.GetComponent<PhotonView>());
                 photonView.RPC("ShowJoinButton", PhotonTargets.All, channel);
-
-
-                //otherPlayerAgoraRTC.ShowJoinButton(channel);
-                //debugText.text += "\nyou have invited " + otherPlayer.transform.parent.name;
             }
         }
     }
@@ -125,7 +97,7 @@ public class AgoraEngine : Photon.MonoBehaviour
         if(photonView.isMine)
         {
             print("join button pressed");
-            rtcEngine.JoinChannel(otherChannel, null, 0);
+            rtcEngine.JoinChannel(otherChannel, null, localuserID);
         }
     }
 
@@ -145,9 +117,6 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        print("instantiated photon object");
-        //create a new image here
-
         InitializeAgora();
     }
 
@@ -156,21 +125,22 @@ public class AgoraEngine : Photon.MonoBehaviour
         rtcEngine = IRtcEngine.GetEngine(appID);
 
         rtcEngine.OnUserJoined += OnUserJoinedHandler;
+        rtcEngine.OnLocalUserRegistered += OnLocalUserRegisteredHandler;
         rtcEngine.EnableVideo();
         rtcEngine.EnableVideoObserver();
 
         rtcEngine.JoinChannel("agora", null, 0);
-
-        //CreateNewUserVideoFrame();
     }
 
     void CreateNewUserVideoFrame(uint newUserUid)
     {
         if(photonView.isMine)
         {
+            userCount++;
+
             GameObject newUserVideo = Instantiate(videoSurfacePrefab, transform.GetChild(1));
 
-            newUserVideo.GetComponent<RectTransform>().anchoredPosition += Vector2.right * 120;
+            newUserVideo.GetComponent<RectTransform>().anchoredPosition += Vector2.right * 120 * userCount;
 
             VideoSurface videoControls = newUserVideo.GetComponent<VideoSurface>();
             videoControls.SetForUser(newUserUid);
