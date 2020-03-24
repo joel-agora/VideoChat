@@ -6,17 +6,17 @@ using agora_gaming_rtc;
 using agora_utilities;
 using Photon;
 
+// set invite button to interactable.true when I collide with another player
+
 public class AgoraEngine : Photon.MonoBehaviour
 {
     public string appID;
     public string channel;
 
-    public GameObject inviteButton;
+    public Button inviteButton;
     public Button joinButton;
 
     private IRtcEngine rtcEngine;
-
-    public VideoSurface remoteVideoSurface;
 
     private Collider otherPlayer;
     public string otherChannel;
@@ -27,9 +27,10 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public uint localuserID;
 
-    void Start()
+    private void Start()
     {
-
+        inviteButton.interactable = false;
+        joinButton.interactable = false;
     }
 
     private void OnApplicationQuit()
@@ -60,11 +61,9 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         if (photonView.isMine && other.CompareTag("Player"))
         {
-            inviteButton.SetActive(true);
+            inviteButton.interactable = true;
 
             otherPlayer = other;
-
-            //print("otherPlayer = " + other.name);
         }
     }
 
@@ -72,9 +71,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     {
         if (photonView.isMine && other.CompareTag("Player"))
         {
-            inviteButton.SetActive(false);
-            //joinButton.SetActive(false);
-
+            inviteButton.interactable = false;
             otherPlayer = null;
         }
     }
@@ -146,7 +143,6 @@ public class AgoraEngine : Photon.MonoBehaviour
             videoControls.SetForUser(newUserUid);
             videoControls.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
             videoControls.SetEnable(true);
-            
         }
     }
 }
