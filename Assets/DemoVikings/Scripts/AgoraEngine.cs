@@ -27,12 +27,6 @@ public class AgoraEngine : Photon.MonoBehaviour
 
     public uint localuserID;
 
-    private void Start()
-    {
-        inviteButton.interactable = false;
-        joinButton.interactable = false;
-    }
-
     private void OnApplicationQuit()
     {
         userCount = 0;
@@ -115,6 +109,7 @@ public class AgoraEngine : Photon.MonoBehaviour
     void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         InitializeAgora();
+        InitializePlayerCanvas();
     }
 
     void InitializeAgora()
@@ -127,6 +122,17 @@ public class AgoraEngine : Photon.MonoBehaviour
         rtcEngine.EnableVideoObserver();
 
         rtcEngine.JoinChannel("agora", null, 0);
+    }
+
+    void InitializePlayerCanvas()
+    {
+        inviteButton.interactable = false;
+        joinButton.interactable = false;
+
+        if(!photonView.isMine)
+        {
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 
     void CreateNewUserVideoFrame(uint newUserUid)
